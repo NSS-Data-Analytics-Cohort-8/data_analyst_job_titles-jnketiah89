@@ -47,11 +47,12 @@ WHERE review_count BETWEEN 500 AND 1000;
 
 
 -- 6.Show the average star rating for companies in each state. The output should show the state as state and the average rating for the state as avg_rating. Which state shows the highest average rating?
-SELECT location, AVG(star_rating) 
+SELECT AVG(star_rating) AS avg_rating, location AS state
 FROM data_analyst_jobs
-GROUP BY location;
+GROUP BY state
+ORDER BY avg_rating DESC;
 
---Answer:Nevada
+--Answer:Nebraska
 
 -- 7.Select unique job titles from the data_analyst_jobs table. How many are there?
 SELECT DISTINCT tittle
@@ -60,22 +61,30 @@ FROM data_analyst_jobs;
 --Answer:881
 
 -- 8.How many unique job titles are there for California companies?
-SELECT DISTINCT COUNT(*) tittle
+SELECT COUNT (DISTINCT tittle)
 FROM data_analyst_jobs
 WHERE location = 'CA';
 
---Answer:376
+--Answer:230
 
 
 
 -- 9.Find the name of each company and its average star rating for all companies that have more than 5000 reviews across all locations. How many companies are there with more that 5000 reviews across all locations?
-SELECT AVG(star_rating) 
-FROM data_analyst_jobs.company
-HAVING review_count > 5000;
+SELECT company, AVG(star_rating) AS avg_star_rating
+FROM data_analyst_jobs
+WHERE review_count > 5000
+      AND company IS NOT NULL
+GROUP BY company;
+
+--Answer:40
+
 
 -- 10.Add the code to order the query in #9 from highest to lowest average star rating. Which company with more than 5000 reviews across all locations in the dataset has the highest star rating? What is that rating?
 
 -- 11.Find all the job titles that contain the word ‘Analyst’. How many different job titles are there?
+SELECT DISTINCT tittle
+SELECT FROM data_analyst_jobs
+WHERE tittle LIKE '%Analyst%';
 
 -- 12.How many different job titles do not contain either the word ‘Analyst’ or the word ‘Analytics’? What word do these positions have in common?
 
